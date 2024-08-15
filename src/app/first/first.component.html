@@ -3,3 +3,138 @@
     <p class="col-3">test</p>
 </div>
 <p class="col-6"><del>hello world</del></p>
+<h1>Template Driven Form</h1>
+<form (ngSubmit)="onSubmit()" #userdata="ngForm">
+    <div class="row">
+        <div class="row col-sm-5">
+            <div class="form-group" >
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" ngModel class="form-control" required="firstname">
+            </div>
+            <div class="form-group">
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" ngModel class="form-control" required="lastname">
+            </div>
+            <div class="form-group">
+                <label for="email">email</label>
+                <input type="text" id="email" name="email" ngModel class="form-control" required email #email="ngModel">
+                <span *ngIf="!email.valid && email.touched">Enter valid email id</span>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>  
+                <br> 
+                <span>
+                <label>   
+                    <input type="radio" name="gender" ngModel value="Male"> Male  
+                </label>  
+            <label>                
+                    <input type="radio" name="gender"  ngModel value="Female"> Female
+                </label>  
+            </span>    
+            </div>
+            <div class="form-group">
+                <label for="isMarried">Married</label>
+                <input type="checkbox" name="isMarried" ngModel>
+            </div>
+
+        </div>
+       
+            <div ngModelGroup="address">
+            <div class="row col-sm-5">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" class="form-control" ngModel [ngModel]="'india'">
+                        <option *ngFor="let county of countrylist" >
+                            {{county.countryname}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" class="form-control" ngModel>                    
+                </div>
+                <div class="form-group">
+                    <label for="Street">Street</label>
+                    <select id="street" name="street" class="form-control" ngModel [ngModel]="'line1'">
+                        <option *ngFor="let s of street">
+                            {{s.line}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            </div>
+            <button type="submit" [disabled]="!userdata.valid">Submit</button>
+        </div>         
+        <button type="button" (click)="setDefaultValue()">setvalue</button>
+        <button type="button" (click)="setUpdatevalue()">updateValue</button>
+
+</form>
+
+<div >
+    <pre>{{userdata.value |json}}</pre>
+</div>
+<h1>REACTIVE FORM MODEL  OR MODEL DRIVEN FORM</h1>
+<form  [formGroup]="userInfo" (ngSubmit)="process()">
+    <div class="row">
+        <div class="row col-sm-5">
+            <div class="form-group" >
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname"  formControlName="firstname" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname"  formControlName="lastname" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="email">email</label>
+                <input type="text" id="email" name="email"  formControlName="email" class="form-control">
+                <span *ngIf="!email.valid && email.touched">Enter valid email id</span>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>  
+                <br> 
+                <span>
+                <label>   
+                    <input type="radio" name="gender" formControlName="gender"  value="Male"> Male  
+                </label>  
+            <label>                
+                    <input type="radio" name="gender"  formControlName="gender" value="Female"> Female
+                </label>  
+            </span>    
+            </div>
+            <div class="form-group">
+                <label for="isMarried">Married</label>
+                <input type="checkbox" name="isMarried"  formControlName="isMarried" formControlName="isMarried">
+            </div>
+
+        </div>
+       
+            <div formGroupName="address">
+            <div class="row col-sm-5">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" class="form-control" formControlName="country" >
+                        <option *ngFor="let county of countrylist" >
+                            {{county.countryname}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" class="form-control" formControlName="city" >                    
+                </div>
+                <div class="form-group">
+                    <label for="Street">Street</label>
+                    <select id="street" name="street" class="form-control" formControlName="street" >
+                        <option *ngFor="let s of street">
+                            {{s.line}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            </div>
+            <button type="submit" [disabled]="!userInfo.valid">Submit</button>
+        </div>         
+        
+
+</form>
